@@ -7,7 +7,7 @@ import 'dotenv/config'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCiU28uRk_a6P3sWSFposy0-Fl-lRpjaUU",
+  apiKey: process.env.FIREBASE_API_KEY,
   authDomain: "jornada-milhas-5ddee.firebaseapp.com",
   projectId: "jornada-milhas-5ddee",
   storageBucket: "jornada-milhas-5ddee.firebasestorage.app",
