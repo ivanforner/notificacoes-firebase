@@ -1,19 +1,13 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
-import 'dotenv/config'
+import { FIREBASE_CONFIG, VAPID_KEY } from "./config/FirebaseConfig";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: "jornada-milhas-5ddee.firebaseapp.com",
-  projectId: "jornada-milhas-5ddee",
-  storageBucket: "jornada-milhas-5ddee.firebasestorage.app",
-  messagingSenderId: "691971876377",
-  appId: "1:691971876377:web:540a92d1ce1fa96225ec88"
-};
+const firebaseConfig = FIREBASE_CONFIG;
 
 // Initialize Firebase
 initializeApp(firebaseConfig);
@@ -23,7 +17,7 @@ const messaging = getMessaging();
 export const requestToken = async () => {
     try {
         const currentToken = await getToken(messaging, {
-            vapidKey: process.env.VAPID_KEY
+            vapidKey: VAPID_KEY
         });
 
         if (currentToken) {
@@ -40,7 +34,12 @@ export const requestToken = async () => {
 export const onMessageListener = () => new Promise (
     (resolve) => {
         onMessage(messaging, () => (payload) => {
-            console.log(payload)
+            console.log("Notificação em primeiro plano", payload.notification)
+            const notificationTitle = payload.notification.title
+            const notificationOptions = {
+                body: payload.notification.body
+            }
+            new Notification(notificationTitle, notificationOptions)
             resolve(payload)
         })
     }
