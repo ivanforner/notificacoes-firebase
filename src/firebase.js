@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import 'dotenv/config'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -22,7 +23,7 @@ const messaging = getMessaging();
 export const requestToken = async () => {
     try {
         const currentToken = await getToken(messaging, {
-            vapidKey: "BJaKSxRD22UqNwilbs40HrEqckgmbzj3_S-ICTJmgp81TrKGeaCypuVB4Q-nsADYCdJGqmSqDwUeVQD6iO6oN8w"
+            vapidKey: process.env.VAPID_KEY
         });
 
         if (currentToken) {
